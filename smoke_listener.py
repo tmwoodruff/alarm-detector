@@ -36,13 +36,16 @@ client = mqtt.Client()
 if MQTT_USER and MQTT_PASS:
     client.username_pw_set(MQTT_USER, MQTT_PASS)
 
-try:
-    client.connect(MQTT_BROKER, MQTT_PORT, 60)
-    client.loop_start()
-    print("[INFO] Connected to MQTT Broker.")
-except Exception as e:
-    print(f"[ERROR] Failed to connect to MQTT broker: {e}")
-    exit(1)
+print("[INFO] Connecting to MQTT Broker...")
+while True:
+    try:
+        client.connect(MQTT_BROKER, MQTT_PORT, 60)
+        client.loop_start()
+        print("[INFO] Connected to MQTT Broker successfully.")
+        break
+    except Exception as e:
+        print(f"[WARN] Broker not ready yet ({e}). Retrying in 5 seconds...")
+        time.sleep(5)
 
 def send_mqtt_alert(state_payload, message):
     payload = f'{{"state": "{state_payload}", "message": "{message}"}}'

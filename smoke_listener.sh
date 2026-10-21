@@ -11,4 +11,4 @@ else
     source $BASEDIR/.venv/bin/activate
 fi
 
-python3 $BASEDIR/smoke_listener.py
+exec python3 $BASEDIR/smoke_listener.py

@@ -1,0 +1,15 @@
+[Unit]
+Description=Smoke Alarm Listener for Home Assistant
+After=network-online.target docker.service
+Wants=network-online.target docker.service
+
+[Service]
+Type=simple
+User=homeservices
+WorkingDirectory=/opt/home-assistant/alarm-detector/smoke_listener.sh
+ExecStart=/opt/home-assistant/alarm-detector/smoke_listener.sh
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
